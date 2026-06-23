@@ -1,0 +1,29 @@
+name: Run Weekly AI Bot
+
+on:
+  schedule:
+    - cron: '0 14 * * 1' # Runs every Monday at 2:00 PM UTC
+  workflow_dispatch:     # Allows manual runs
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install uv automatically
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true # Caches dependencies for even faster runs
+
+      # Run the script and dynamically inject the required packages
+      - name: Execute Bot Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: uv run --with feedparser --with google-genai python bot.py
+
+      # Inject the markdown into the job summary for the GitHub email alert
+      - name: Publish Digest to GitHub Summary
+        run: cat digest.md >> $GITHUB_STEP_SUMMARY
