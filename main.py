@@ -52,10 +52,11 @@ Select the 4 most critical updates and group them into these three strict catego
 4. AI Market Landscape & Interesting Use Cases
 
 Format your response strictly using clean Markdown headers (###), bullet points, and hyperlinks. Do NOT wrap it in a code block.
-For each selected update:
+
 For each selected update:
 - Provide a bold title linked directly to its source URL.
 - Write a highly technical 2-sentence breakdown detailing the specific mechanism and its engineering implications.
+- Provide citation for each update and article.
 
 Data:
 {collected_text}
