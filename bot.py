@@ -5,6 +5,7 @@ from email.mime.text import MIMEText
 import feedparser
 from google import genai
 from dotenv import load_dotenv
+from datetime import datetime
 
 # Load the .env file
 load_dotenv()
