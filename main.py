@@ -114,8 +114,13 @@ response = client.models.generate_content(
 )
 markdown_summary = response.text
 
-with open("digest.md", "w", encoding="utf-8") as f:
-    f.write("## 🛠️ Weekly AI Engineering & Frameworks Briefing\n\n")
-    f.write(markdown_summary)
+# At the end of bot.py, after response = client.models.generate_content(...)
 
-print("Digest successfully generated.")
+digest = response.text
+
+# Write for GitHub Actions summary
+with open("digest.md", "w") as f:
+    f.write(f"# AI Engineering Digest — {datetime.utcnow().strftime('%Y-%m-%d')}\n\n")
+    f.write(digest)
+
+print(digest)  # also log to Actions console
