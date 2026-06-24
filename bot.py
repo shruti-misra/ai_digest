@@ -6,6 +6,7 @@ import feedparser
 from google import genai
 from dotenv import load_dotenv
 from datetime import datetime
+from email_sender import EmailSender
 
 # Load the .env file
 load_dotenv()
@@ -25,7 +26,7 @@ RSS_FEEDS = [
     "https://medium.com/feed/airbnb-engineering",
     "https://machinelearning.apple.com/rss.xml",
     "https://www.databricks.com/blog/feed",
-    "https://www.deepmind.com/blog/rss.xml.
+    "https://www.deepmind.com/blog/rss.xml",
     "https://openai.com/blog/rss",
     "http://labs.spotify.com/feed/",
     "https://feeds.feedburner.com/martinkl?format=xml",
@@ -121,7 +122,7 @@ Rules:
 
 
 response = client.models.generate_content(
-    model='gemini-2.5-flash',
+    model='gemini-3.5-flash',
     contents=prompt
 )
 markdown_summary = response.text
@@ -130,9 +131,9 @@ markdown_summary = response.text
 
 digest = response.text
 
-# Write for GitHub Actions summary
-with open("digest.md", "w") as f:
-    f.write(f"# AI Engineering Digest — {datetime.utcnow().strftime('%Y-%m-%d')}\n\n")
-    f.write(digest)
+timestamp = datetime.now().strftime("%Y-%m-%d")
+subject = f"Digest — {timestamp}"
 
-print(digest)  # also log to Actions console
+email = EmailSender(subject, digest)
+email.send_email()
+

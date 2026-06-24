@@ -20,27 +20,7 @@ jobs:
       - name: Execute Bot Script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: uv run --with feedparser --with google-genai python bot.py
-
-      - name: Verify digest was produced
-        run: |
-          if [ ! -f digest.md ]; then
-            echo "❌ digest.md was not created by bot.py" >&2
-            exit 1
-          fi
-          echo "✅ digest.md exists ($(wc -l < digest.md) lines)"
-
-      - name: Publish Digest to GitHub Summary
-        run: cat digest.md >> $GITHUB_STEP_SUMMARY
-
-      # Optional: commit digest to repo for a history trail
-      - name: Commit digest to repo
-        if: github.event_name == 'schedule'   # skip on manual runs if you prefer
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          mkdir -p digests
-          cp digest.md digests/$(date -u +%Y-%m-%d).md
-          git add digests/
-          git diff --cached --quiet || git commit -m "chore: weekly digest $(date -u +%Y-%m-%d)"
-          git push
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+        run: uv run --with feedparser --with google-genai --with markdown --with python-dotenv python bot.py
