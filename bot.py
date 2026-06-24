@@ -21,6 +21,16 @@ RSS_FEEDS = [
     "https://www.anthropic.com/engineering/rss.xml",
     "https://aws.amazon.com/blogs/machine-learning/feed/",
     "https://cohere.com/blog/rss.xml",
+    "https://bair.berkeley.edu/blog/feed.xml",
+    "https://medium.com/feed/airbnb-engineering",
+    "https://machinelearning.apple.com/rss.xml",
+    "https://www.databricks.com/blog/feed",
+    "https://www.deepmind.com/blog/rss.xml.
+    "https://openai.com/blog/rss",
+    "http://labs.spotify.com/feed/",
+    "https://feeds.feedburner.com/martinkl?format=xml",
+    
+    
 ]
 
 SITE_URLS = [
@@ -31,6 +41,7 @@ SITE_URLS = [
     "https://research.google/blog/",
     "https://blogs.nvidia.com/blog/tag/inference/",
     "https://stratechery.com/",
+    "https://research.netflix.com/archive"
 ]
 
 collected_text = ""
